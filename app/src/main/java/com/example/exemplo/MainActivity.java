@@ -42,4 +42,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("result",result);
         startActivity(intent);
     }
+    public void abrirjanelagorjeta (View View ){
+
+        Intent intent = new Intent(this, TipCalculatorActivity.class);
+        startActivity(intent);
+    }
+
 }
