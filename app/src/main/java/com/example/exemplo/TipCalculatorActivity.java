@@ -15,56 +15,62 @@ public class TipCalculatorActivity extends AppCompatActivity {
 
     private EditText editTextValor;
     private TextView textViewValor;
-    private TextView textViewPCT;
+    private TextView textViewPct;
     private TextView textViewGorjeta;
     private TextView textViewTotal;
     private SeekBar seekBar;
     private double valor;
+    private double gorjeta;
     private double porcentagem;
     private double total;
-    private double gorjeta;
-    private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-    private NumberFormat percentFormat = NumberFormat.getPercentInstance();
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+    NumberFormat pctFormat = NumberFormat.getPercentInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tip_calculator);
         editTextValor = findViewById(R.id.editTextNumber4);
         textViewValor = findViewById(R.id.txt_Value);
-        textViewPCT = findViewById(R.id.txt_PCT);
+        textViewPct = findViewById(R.id.txt_PCT);
         textViewGorjeta = findViewById(R.id.txt_gorjeta);
         textViewTotal = findViewById(R.id.txt_Total);
         seekBar = findViewById(R.id.seekBar3);
-
-
         editTextValor.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-           int valorInt;
-           try {
-               valorInt = Integer.parseInt(editTextValor.getText().toString());
-           } catch (NumberFormatException e){
-               valorInt = 0;
-
-           }
-           valor = valorInt/100.0;
-            atualizarValores();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int valorInt;
+                try {
+                    valorInt = Integer.parseInt(editTextValor.getText().toString());
+                } catch (NumberFormatException e) {
+                    valorInt = 0;
+                }
+                valor = valorInt/100.0;
+                recalcular();
             }
-
             @Override
-            public void afterTextChanged(Editable editable) {
-
+            public void afterTextChanged(Editable s) {}
+        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                porcentagem = progress/100.0;
+                recalcular();
             }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 
-    private void atualizarValores(){
+    private void recalcular() {
         textViewValor.setText(currencyFormat.format(valor));
-
+        textViewPct.setText(pctFormat.format(porcentagem));
+        gorjeta = valor * porcentagem;
+        total = valor + gorjeta;
+        textViewGorjeta.setText(currencyFormat.format(gorjeta));
+        textViewTotal.setText(currencyFormat.format(total));
     }
 }

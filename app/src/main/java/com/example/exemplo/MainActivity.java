@@ -47,5 +47,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TipCalculatorActivity.class);
         startActivity(intent);
     }
+    public void abrirjaneladesenho (View View ){
 
+        Intent intent = new Intent(this, MainActivityDesenho.class);
+        startActivity(intent);
+    }
 }
+
