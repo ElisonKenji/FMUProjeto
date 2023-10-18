@@ -11,4 +11,9 @@ public class MainActivityDesenho extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_desenho);
     }
+
+
+            public static class DesenhoJava{
+
+            }
 }
